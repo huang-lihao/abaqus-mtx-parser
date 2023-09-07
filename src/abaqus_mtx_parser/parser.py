@@ -1,6 +1,7 @@
 import numpy as np
 import re
 
+
 def parse_mtx(file_name: str):
     with open(file_name, "r") as mtx:
         lines = mtx.readlines()
@@ -31,11 +32,13 @@ def parse_mtx(file_name: str):
                 else:
                     frame["comments"] = [text]
             else:
-                if re.match("^(\s*-?\d*(\.\d*)?([Ee][+-]\d*)?[,]*[\s]*)+\n$", line):
+                if re.match(
+                    "^(\s*-?\d*(\.\d*)?([Ee][+-]\d*)?[,]*[\s]*)+\n$",
+                    line,
+                ):
                     variable = line.strip().rstrip(",").split(",")
                     frame["data"].extend(variable)
 
-    
     for d in data:
         if d[0] == "USER ELEMENT":
             if "UNSYM" in d[1]["parameter"]:
@@ -54,12 +57,12 @@ def parse_mtx(file_name: str):
             num_nodes = int(d[1]["parameter"]["NODES"])
             assert num_nodes == len(nodes)
             d[1]["nodes"] = nodes
-            
+
     for d in data:
         if d[0] == "MATRIX":
             d[1]["data"] = np.array([
                 float(v)
-                for v  in d[1]["data"]
+                for v in d[1]["data"]
             ])
             if not symmetric and d[1]["parameter"]["TYPE"] == "STIFFNESS":
                 continue

@@ -13,7 +13,7 @@ class TestAbaqusMtxParser(unittest.TestCase):
     def test_unsymmetric_stiffness(self):
         mtx = files("abaqus_mtx_parser.mtx").joinpath("unsym.mtx")
         result = parse_mtx(mtx)
-    
+
     def test_symmetric_stiffness(self):
         mtx = files("abaqus_mtx_parser.mtx").joinpath("sym.mtx")
         result = parse_mtx(mtx)
