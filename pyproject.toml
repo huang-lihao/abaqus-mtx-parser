@@ -1,6 +1,6 @@
 [project]
 name = "abaqus-mtx-parser"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="HUANG Lihao", email="huang-lihao@outlook.com" },
 ]
