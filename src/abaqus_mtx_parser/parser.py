@@ -64,9 +64,17 @@ def parse_mtx(file_name: str):
                 float(v)
                 for v in d[1]["data"]
             ])
+
+            array = d[1]["data"]
             if not symmetric and d[1]["parameter"]["TYPE"] == "STIFFNESS":
-                continue
+                n = int(np.sqrt(len(array)))
+                assert n * n == len(array)
+                d[1]["data"] = array.reshape((n, n))
             else:
-                continue
+                n = int(np.floor(np.sqrt(2 * len(array))))
+                assert n * (n + 1) / 2 == len(array)
+                d[1]["data"] = np.zeros((n, n))
+                d[1]["data"][np.tril_indices(n)] = array
+                d[1]["data"].T[np.tril_indices(n)] = array
 
     return data
