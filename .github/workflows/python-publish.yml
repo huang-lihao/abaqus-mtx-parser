@@ -17,12 +17,12 @@ permissions:
 
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
-
+    environment:
+      name: pypi
+      url: https://pypi.org/p/abaqus-mtx-parser
     permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing
-      id-token: write
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
 
     steps:
     - uses: actions/checkout@v3
