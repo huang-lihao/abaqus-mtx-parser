@@ -2,7 +2,17 @@ import numpy as np
 import re
 
 
+class MtxFile:
+    def __init__(self) -> None:
+        self.stiffness: np.array = None
+        self.mass: np.array = None
+        self.nodes: list = None
+        self.dof: list = None
+        self.data: list = None
+
+
 def parse_mtx(file_name: str):
+    result = MtxFile()
     with open(file_name, "r") as mtx:
         lines = mtx.readlines()
 
@@ -48,7 +58,7 @@ def parse_mtx(file_name: str):
 
             dof = d[1]["data"]
             dof = [int(v) for v in dof]
-            d[1]["dof"] = dof
+            result.dof = dof
 
             nodes = [
                 int(n)
@@ -56,7 +66,7 @@ def parse_mtx(file_name: str):
             ]
             num_nodes = int(d[1]["parameter"]["NODES"])
             assert num_nodes == len(nodes)
-            d[1]["nodes"] = nodes
+            result.nodes = nodes
 
     for d in data:
         if d[0] == "MATRIX":
@@ -76,5 +86,11 @@ def parse_mtx(file_name: str):
                 d[1]["data"] = np.zeros((n, n))
                 d[1]["data"][np.tril_indices(n)] = array
                 d[1]["data"].T[np.tril_indices(n)] = array
+            
+            if d[1]["parameter"]["TYPE"] == "STIFFNESS":
+                result.stiffness = d[1]["data"]
+            elif d[1]["parameter"]["TYPE"] == "MASS":
+                result.mass = d[1]["data"]
+    result.data = data
 
-    return data
+    return result
