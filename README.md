@@ -2,8 +2,8 @@
 [![GitHub release (with filter)](https://img.shields.io/github/v/release/huang-lihao/abaqus-mtx-parser?logo=github)
 ](https://github.com/huang-lihao/abaqus-mtx-parser)
 [![Upload Python Package](https://github.com/huang-lihao/abaqus-mtx-parser/actions/workflows/python-publish.yml/badge.svg)](https://github.com/huang-lihao/abaqus-mtx-parser/actions/workflows/python-publish.yml)
-[![PyPI - Version](https://img.shields.io/pypi/v/abaqus-mtx-parser?logo=pypi)](https://badge.fury.io/py/abaqus-mtx-parser)
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/abaqus-mtx-parser?logo=PyPI)]()
+[![PyPI - Version](https://img.shields.io/pypi/v/abaqus-mtx-parser?logo=pypi)](https://pypi.org/project/abaqus-mtx-parser/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/abaqus-mtx-parser?logo=PyPI)](https://pypi.org/project/abaqus-mtx-parser/)
 
 
 
