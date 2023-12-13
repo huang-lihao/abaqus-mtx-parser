@@ -1,6 +1,5 @@
 [project]
 name = "abaqus-mtx-parser"
-version = "1.1.0"
 authors = [
   { name="HUANG Lihao", email="huang-lihao@outlook.com" },
 ]
@@ -28,9 +27,9 @@ where = ["src"]
 mtx = ["*.mtx"]
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
-write_to = "src/metalattice/_version.py"
+write_to = "src/abaqus_mtx_parser/_version.py"
 local_scheme = "no-local-version"
