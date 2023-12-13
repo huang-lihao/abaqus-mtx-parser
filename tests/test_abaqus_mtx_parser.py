@@ -17,7 +17,7 @@ class TestAbaqusMtxParser(unittest.TestCase):
 
         # Test nodes and dof
         self.assertListEqual(result.nodes, [2, 3, 4, 5, 6, 7])
-        self.assertListEqual(result.dof, [1, 2, 3, 4, 5, 6])
+        self.assertDictEqual(result.dof, {2: [1, 2, 3, 4, 5, 6], 3: [1, 2, 3, 4, 5, 6], 4: [1, 2, 3, 4, 5, 6], 5: [1, 2, 3, 4, 5, 6], 6: [1, 2, 3, 4, 5, 6], 7: [1, 2, 3, 4, 5, 6]})
 
         # Test stiffness matrix
         matrix = result.stiffness
@@ -34,7 +34,7 @@ class TestAbaqusMtxParser(unittest.TestCase):
 
         # Test nodes and dof
         self.assertListEqual(result.nodes, [2, 3, 4, 5, 6, 7])
-        self.assertListEqual(result.dof, [1, 2, 3, 4, 5, 6])
+        self.assertDictEqual(result.dof, {2: [1, 2, 3, 4, 5, 6], 3: [1, 2, 3, 4, 5, 6], 4: [1, 2, 3, 4, 5, 6], 5: [1, 2, 3, 4, 5, 6], 6: [1, 2, 3, 4, 5, 6], 7: [1, 2, 3, 4, 5, 6]})
 
         # Test stiffness matrix
         matrix = result.stiffness

@@ -24,6 +24,7 @@ def parse_mtx(file_name: str):
             data.append((
                 variable[0], {}
             ))
+            keyword = variable[0]
             frame = data[-1][1]
             frame["parameter"] = {}
             for v in variable[1:]:
@@ -47,7 +48,10 @@ def parse_mtx(file_name: str):
                     line,
                 ):
                     variable = line.strip().rstrip(",").split(",")
-                    frame["data"].extend(variable)
+                    if keyword == "USER ELEMENT":
+                        frame["data"].append(variable)
+                    else:
+                        frame["data"].extend(variable)
 
     for d in data:
         if d[0] == "USER ELEMENT":
@@ -56,9 +60,11 @@ def parse_mtx(file_name: str):
             else:
                 symmetric = True
 
-            dof = d[1]["data"]
-            dof = [int(v) for v in dof]
-            result.dof = dof
+            dof_raw = d[1]["data"]
+            dof_raw = [[int(vv) for vv in v] for v in dof_raw]
+            dof_raw[0].insert(0, 1)
+            result.dof = {v[0]: v[1:] for v in dof_raw}
+            node_keys = sorted(list(result.dof.keys()))
 
             nodes = [
                 int(n)
@@ -67,6 +73,16 @@ def parse_mtx(file_name: str):
             num_nodes = int(d[1]["parameter"]["NODES"])
             assert num_nodes == len(nodes)
             result.nodes = nodes
+
+            for node in nodes:
+                if len(node_keys) == 1:
+                    result.dof[node] = result.dof[node_keys[0]]
+                    continue
+                for i in range(len(node_keys) - 1):
+                    if node_keys[i] <= node < node_keys[i + 1]:
+                        result.dof[node] = result.dof[node_keys[i]]
+                        break
+            result.dof = {node: result.dof[node] for node in nodes}
 
     for d in data:
         if d[0] == "MATRIX":
