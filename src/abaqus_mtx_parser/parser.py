@@ -7,7 +7,7 @@ class MtxFile:
         self.stiffness: np.array = None
         self.mass: np.array = None
         self.nodes: list = None
-        self.dof: list = None
+        self.dof: dict[int, list[int]] = {}
         self.data: list = None
 
 
@@ -63,8 +63,8 @@ def parse_mtx(file_name: str):
             dof_raw = d[1]["data"]
             dof_raw = [[int(vv) for vv in v] for v in dof_raw]
             dof_raw[0].insert(0, 1)
-            result.dof = {v[0]: v[1:] for v in dof_raw}
-            node_keys = sorted(list(result.dof.keys()))
+            dof_raw = {v[0]: v[1:] for v in dof_raw}
+            node_keys = sorted(list(dof_raw.keys()))
 
             nodes = [
                 int(n)
@@ -74,15 +74,14 @@ def parse_mtx(file_name: str):
             assert num_nodes == len(nodes)
             result.nodes = nodes
 
-            for node in nodes:
+            j = 0
+            for i, node in enumerate(nodes):
                 if len(node_keys) == 1:
-                    result.dof[node] = result.dof[node_keys[0]]
+                    result.dof[node] = dof_raw[node_keys[0]]
                     continue
-                for i in range(len(node_keys) - 1):
-                    if node_keys[i] <= node < node_keys[i + 1]:
-                        result.dof[node] = result.dof[node_keys[i]]
-                        break
-            result.dof = {node: result.dof[node] for node in nodes}
+
+                if i == node_keys[j + 1]: j += 1
+                result.dof[node] = dof_raw[node_keys[j]]
 
     for d in data:
         if d[0] == "MATRIX":
