@@ -63,7 +63,7 @@ def parse_mtx(file_name: str):
             dof_raw = d[1]["data"]
             dof_raw = [[int(vv) for vv in v] for v in dof_raw]
             dof_raw[0].insert(0, 1)
-            dof_raw = {v[0]: v[1:] for v in dof_raw}
+            dof_raw = {v[0] - 1: v[1:] for v in dof_raw}
             node_keys = sorted(list(dof_raw.keys()))
 
             nodes = [
