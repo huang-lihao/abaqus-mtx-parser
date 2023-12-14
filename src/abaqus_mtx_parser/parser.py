@@ -80,7 +80,7 @@ def parse_mtx(file_name: str):
                     result.dof[node] = dof_raw[node_keys[0]]
                     continue
 
-                if i == node_keys[j + 1]: j += 1
+                if (j + 1) < len(node_keys) and i == node_keys[j + 1]: j += 1
                 result.dof[node] = dof_raw[node_keys[j]]
 
     for d in data:
