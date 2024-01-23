@@ -16,3 +16,23 @@ Use PyPI to install [abaqus-mtx-parser](https://pypi.org/project/abaqus-mtx-pars
 ```sh
 pip install abaqus-mtx-parser
 ```
+
+Usage
+----------------------
+Run the following script to parse the mtx file `inner.mtx`.
+```python
+from importlib.resources import files
+
+from abaqus_mtx_parser import parse_mtx
+
+mtx = files(
+    "abaqus_mtx_parser.mtx.unsymmetric"
+).joinpath("inner.mtx") # Path to "inner.mtx"
+result = parse_mtx(mtx)
+
+print(
+    result.nodes,       # node numbers: [2, 3, 4, 5, 6, 7]
+    result.dof,         # node dofs: {2: [1, 2, 3, 4, 5, 6], 3: [1, 2, 3, 4, 5, 6], 4: [1, 2, 3, 4, 5, 6], 5: [1, 2, 3, 4, 5, 6], 6: [1, 2, 3, 4, 5, 6], 7: [1, 2, 3, 4, 5, 6]}
+    result.stiffness,   # stiffness matrix
+)
+```
